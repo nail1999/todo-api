@@ -128,8 +128,8 @@ namespace ToDoApi.Controllers
         }
 
         // POST: api/ToDoes/UpdatePercentComplete
-        [Route("[action]")]
-        [HttpPost]
+        [Route("[action]/{id}/{percentComplete}")]
+        [HttpPut]
         public async Task<ActionResult<ToDo>> UpdatePercentComplete(int id, double percentComplete)
         {
             var toDo = await _context.ToDos.FindAsync(id);
@@ -137,9 +137,9 @@ namespace ToDoApi.Controllers
             {
                 return NotFound("ToDo Id cannot be found.");
             }
-            
+
             //check if percent complete value is not in accepted range
-            if(percentComplete < 0 || percentComplete > 100)
+            if (percentComplete < 0 || percentComplete > 100)
             {
                 return BadRequest("Percent complete should be between 0 and 100.");
             }
@@ -151,8 +151,8 @@ namespace ToDoApi.Controllers
         }
 
         // POST: api/ToDoes/CompleteToDo
-        [Route("[action]")]
-        [HttpPost]
+        [Route("[action]/{id}")]
+        [HttpPut]
         public async Task<ActionResult<ToDo>> CompleteToDo(int id)
         {
             var toDo = await _context.ToDos.FindAsync(id);
